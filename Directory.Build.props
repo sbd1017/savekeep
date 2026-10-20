@@ -1,0 +1,16 @@
+<Project>
+  <PropertyGroup>
+    <TargetFramework>net10.0</TargetFramework>
+    <ImplicitUsings>enable</ImplicitUsings>
+    <Nullable>enable</Nullable>
+    <LangVersion>latest</LangVersion>
+    <TreatWarningsAsErrors>true</TreatWarningsAsErrors>
+    <RestorePackagesWithLockFile>true</RestorePackagesWithLockFile>
+    <InvariantGlobalization>false</InvariantGlobalization>
+    <Version>0.1.0</Version>
+    <!-- Listed everywhere so packages.lock.json is the same for local builds and linux-arm64 publishes. -->
+    <RuntimeIdentifiers>linux-arm64;linux-x64;osx-arm64</RuntimeIdentifiers>
+    <Authors>SaveKeep contributors</Authors>
+    <Copyright>GPL-3.0-or-later</Copyright>
+  </PropertyGroup>
+</Project>

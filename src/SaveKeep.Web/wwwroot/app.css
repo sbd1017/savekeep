@@ -1,0 +1,81 @@
+:root {
+  color-scheme: dark;
+  --bg: #111317; --card: #1a1d23; --text: #e8eaee; --muted: #9aa1ad; --line: #2d323b;
+  --accent: #5b8cff; --accent-text: #0b0d10; --good: #4ade80; --good-bg: #13291b;
+  --warn: #facc15; --warn-bg: #2b2510; --bad: #f87171; --bad-bg: #2e1515; --cell: #22262e; --shiny: #fb923c;
+}
+* { box-sizing: border-box; }
+body { margin: 0; background: var(--bg); color: var(--text); font: 15px/1.45 system-ui, -apple-system, "Segoe UI", sans-serif; }
+header { display: flex; justify-content: space-between; align-items: center; gap: 12px; padding: 12px 16px; background: var(--card); border-bottom: 1px solid var(--line); position: sticky; top: 0; z-index: 3; }
+.brand { font-weight: 700; letter-spacing: .2px; }
+.small-head { font-size: 13px; text-align: right; }
+.pill { padding: 3px 10px; border-radius: 999px; font-size: 13px; font-weight: 600; }
+.pill.off { background: var(--cell); color: var(--muted); }
+.pill.ready { background: var(--good-bg); color: var(--good); }
+.pill.bad { background: var(--bad-bg); color: var(--bad); }
+nav { display: flex; gap: 4px; padding: 8px 12px; overflow-x: auto; background: var(--card); border-bottom: 1px solid var(--line); position: sticky; top: 49px; z-index: 2; }
+nav button { border: 0; background: none; color: var(--muted); padding: 8px 10px; border-radius: 8px; white-space: nowrap; font: inherit; cursor: pointer; }
+nav button.active { background: var(--cell); color: var(--text); font-weight: 600; }
+main { max-width: 980px; margin: 0 auto; padding: 12px 16px 64px; }
+.tab { display: none; }
+.tab.active { display: block; }
+.card { background: var(--card); border: 1px solid var(--line); border-radius: 12px; padding: 14px 16px; margin: 12px 0; }
+h2 { font-size: 17px; margin: 0 0 10px; }
+h3 { font-size: 15px; margin: 16px 0 8px; }
+.row { display: flex; flex-wrap: wrap; gap: 8px; align-items: center; margin: 8px 0; }
+.row.spread { justify-content: space-between; }
+label { display: flex; flex-direction: column; gap: 3px; font-size: 13px; color: var(--muted); }
+label.check { flex-direction: row; align-items: flex-start; gap: 8px; color: var(--text); font-size: 14px; margin: 8px 0; }
+input, select, button { font: inherit; color: var(--text); }
+input:not([type=checkbox]):not([type=radio]), select { background: var(--bg); border: 1px solid var(--line); border-radius: 8px; padding: 7px 9px; min-width: 0; }
+button { background: var(--cell); border: 1px solid var(--line); border-radius: 8px; padding: 7px 12px; cursor: pointer; }
+button.primary { background: var(--accent); color: var(--accent-text); border-color: var(--accent); font-weight: 600; }
+button:disabled { opacity: .5; cursor: not-allowed; }
+.muted { color: var(--muted); }
+.hidden { display: none !important; }
+.banner { padding: 10px 12px; border-radius: 10px; margin: 10px 0; }
+.banner.good { background: var(--good-bg); color: var(--good); }
+.banner.warn { background: var(--warn-bg); color: var(--warn); }
+.banner.bad { background: var(--bad-bg); color: var(--bad); }
+.banner strong { display: block; font-size: 16px; margin-bottom: 2px; }
+dl.kv { display: grid; grid-template-columns: max-content 1fr; gap: 4px 14px; margin: 0; }
+dl.kv dt { color: var(--muted); }
+dl.kv dd { margin: 0; overflow-wrap: anywhere; }
+ul.plain { margin: 6px 0; padding-left: 18px; }
+.grid { display: grid; grid-template-columns: repeat(6, minmax(0, 1fr)); gap: 6px; margin-top: 8px; }
+.cell { background: var(--cell); border: 1px solid var(--line); border-radius: 8px; padding: 6px 4px; min-height: 58px; font-size: 12px; text-align: center; overflow: hidden; }
+.cell .n { font-weight: 600; font-size: 12.5px; overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
+.cell.empty { color: var(--muted); border-style: dashed; }
+.cell.bad { background: var(--bad-bg); color: var(--bad); }
+.shiny { color: var(--shiny); }
+.badge { display: inline-block; font-size: 11px; padding: 1px 7px; border-radius: 999px; background: var(--cell); color: var(--muted); margin-left: 4px; }
+.badge.ok { background: var(--good-bg); color: var(--good); }
+.badge.warn { background: var(--warn-bg); color: var(--warn); }
+ol.steps { margin: 6px 0 10px; padding-left: 22px; }
+ol.steps li { margin: 3px 0; }
+td.pick { width: 2em; }
+table { border-collapse: collapse; width: 100%; font-size: 13.5px; }
+th, td { text-align: left; border-bottom: 1px solid var(--line); padding: 7px 6px; vertical-align: top; }
+details summary { cursor: pointer; color: var(--muted); }
+.audit { font: 12px/1.4 ui-monospace, SFMono-Regular, Menlo, monospace; max-height: 70vh; overflow-y: auto; }
+.audit div { border-bottom: 1px solid var(--line); padding: 3px 0; }
+.toast { position: fixed; left: 50%; bottom: 18px; transform: translateX(-50%); background: var(--text); color: var(--bg); padding: 9px 14px; border-radius: 10px; max-width: 90vw; z-index: 5; }
+.table-wrap { overflow-x: auto; }
+a.button { display: inline-block; background: var(--cell); border: 1px solid var(--line); border-radius: 8px; padding: 5px 10px; color: var(--text); text-decoration: none; font-size: 13px; white-space: nowrap; }
+a.button.primary { background: var(--accent); color: var(--accent-text); border-color: var(--accent); font-weight: 600; }
+textarea.jksv-json { width: 100%; background: var(--bg); color: var(--text); border: 1px solid var(--line); border-radius: 8px; padding: 8px; font: 12.5px/1.4 ui-monospace, SFMono-Regular, Menlo, monospace; resize: vertical; }
+.vault-actions { display: flex; flex-wrap: wrap; gap: 6px; }
+code { overflow-wrap: anywhere; }
+.save-details { margin-top: 6px; }
+.save-details dl.kv { margin: 6px 0; font-size: 13px; }
+table.party { font-size: 13px; margin-top: 4px; }
+table.party th, table.party td { padding: 4px 6px; }
+@media (max-width: 560px) {
+  .grid { gap: 4px; }
+  .cell { min-height: 52px; font-size: 11px; padding: 4px 2px; }
+  /* One stacked block per save, so the download buttons stay on screen. */
+  table.vault tr:first-child { display: none; }
+  table.vault, table.vault tr, table.vault td { display: block; width: 100%; }
+  table.vault tr { border-bottom: 1px solid var(--line); padding: 8px 0; }
+  table.vault td { border: 0; padding: 2px 0; }
+}

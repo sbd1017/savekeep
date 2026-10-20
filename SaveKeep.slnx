@@ -1,0 +1,10 @@
+<Solution>
+  <Folder Name="/src/">
+    <Project Path="src/SaveKeep.Core/SaveKeep.Core.csproj" />
+    <Project Path="src/SaveKeep.Sim/SaveKeep.Sim.csproj" />
+    <Project Path="src/SaveKeep.Web/SaveKeep.Web.csproj" />
+  </Folder>
+  <Folder Name="/tests/">
+    <Project Path="tests/SaveKeep.Tests/SaveKeep.Tests.csproj" />
+  </Folder>
+</Solution>

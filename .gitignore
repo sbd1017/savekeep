@@ -1,0 +1,11 @@
+bin/
+obj/
+publish/
+dist/
+data/
+data-dev/
+*.user
+.vs/
+.vscode/
+.idea/
+.DS_Store

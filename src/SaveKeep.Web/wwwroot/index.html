@@ -1,0 +1,119 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta name="color-scheme" content="dark">
+<title>SaveKeep</title>
+<link rel="stylesheet" href="app.css">
+</head>
+<body>
+<header>
+  <div class="brand">SaveKeep</div>
+  <div id="summary" class="muted small-head"></div>
+</header>
+<nav id="tabs">
+  <button data-tab="saves" class="active">Saves</button>
+  <button data-tab="ftp">Copy over FTP</button>
+  <button data-tab="jksv">JKSV upload</button>
+  <button data-tab="inspect">Inspect a file</button>
+  <button data-tab="log">Log</button>
+</nav>
+<main>
+  <section id="tab-saves" class="tab active">
+    <div class="card">
+      <div class="row spread"><h2>Saves</h2><span id="vault-meta" class="muted"></span></div>
+      <p class="muted">Every save that reaches SaveKeep is kept here once, by its SHA-256, and never changed. The newest few per game are kept; pin a save to keep it for good. Nothing here talks to a console: to go back to a save, download it and restore it with JKSV or Checkpoint (steps below).</p>
+      <div id="vault-limit" class="banner warn hidden"></div>
+      <div id="vault"></div>
+    </div>
+    <div class="card">
+      <h2>Restoring a save</h2>
+      <p class="muted">Restoring replaces the save on the console. Make a fresh backup of the current save with the same tool first, so you can change your mind.</p>
+      <h3>Switch, with JKSV</h3>
+      <ol class="steps">
+        <li>In JKSV, open the game and make a new backup of the current save as a <strong>folder</strong> (with JKSV's "Export to ZIP" off). Name it <code>restore</code>, for example.</li>
+        <li>Download <strong>main</strong> here. On the SD card, replace <code>/JKSV/&lt;game&gt;/restore/main</code> with it. Leave any other files in that folder alone.</li>
+        <li>In JKSV, select <code>restore</code> and choose <strong>Restore</strong>. Start the game and check.</li>
+        <li>If the save came in as a JKSV zip, <strong>Original zip</strong> is the exact file JKSV made: copy it into <code>/JKSV/&lt;game&gt;/</code> and restore that instead. The <strong>main-only zip</strong> is built here and holds nothing but <code>main</code>; the folder method above is the safer choice.</li>
+      </ol>
+      <h3>3DS, with Checkpoint</h3>
+      <ol class="steps">
+        <li>In Checkpoint, select the game and make a new backup, named <code>restore</code> for example.</li>
+        <li>Download <strong>main</strong> here. On the SD card, replace <code>/3ds/Checkpoint/saves/&lt;game&gt;/restore/main</code> with it.</li>
+        <li>In Checkpoint, select <code>restore</code> and choose <strong>Restore</strong>. Start the game and check.</li>
+      </ol>
+    </div>
+  </section>
+
+  <section id="tab-ftp" class="tab">
+    <div class="card">
+      <h2>Copy a backup over FTP</h2>
+      <p class="muted">Reads the newest JKSV (Switch) or Checkpoint (3DS) backup straight off the SD card while ftpd runs on the console. Only read commands are ever sent; nothing on the SD card changes. The copy goes into Saves.</p>
+      <ol class="steps">
+        <li>Save in the game, then back it up with JKSV or Checkpoint.</li>
+        <li>Start <strong>ftpd</strong> on the console and note its IP address and port.</li>
+        <li>Search, check the suggested backup, then <strong>Copy</strong>. Tip: search once <em>before</em> making the backup, so the new one stands out even if the console's clock is wrong.</li>
+      </ol>
+      <div class="row">
+        <label>Game <select id="ftp-game"></select></label>
+        <label>Console IP <input id="ftp-host" inputmode="decimal" placeholder="192.168.1.50" autocomplete="off"></label>
+        <label>Port <input id="ftp-port" inputmode="numeric" placeholder="5000" size="5"></label>
+        <label>Trainer or Switch user (optional) <input id="ftp-trainer" autocomplete="off"></label>
+      </div>
+      <div class="row"><button id="btn-ftp-find" class="primary">Search</button></div>
+      <div id="ftp-listing"></div>
+    </div>
+  </section>
+
+  <section id="tab-jksv" class="tab">
+    <div class="card">
+      <div class="row spread"><h2>Receive JKSV uploads</h2><span id="jksv-state" class="pill off">Off</span></div>
+      <p class="muted">JKSV on the Switch can send a backup straight here over Wi-Fi (WebDAV), so you don't need ftpd. Uploads are accepted and nothing else: each one is checked to be a Pokémon save and kept in Saves. JKSV can't read, change or delete anything that is kept.</p>
+      <div id="jksv-status"></div>
+      <div id="jksv-login" class="hidden"></div>
+      <div class="row" id="jksv-actions"></div>
+      <details>
+        <summary>Set up JKSV (once)</summary>
+        <ol class="steps">
+          <li>Turn the receiver on here and copy the <code>webdav.json</code> it shows. The password is shown only once; if you lose it, make a new login.</li>
+          <li>Put the file on the Switch's SD card as <code>sd:/config/JKSV/webdav.json</code>. <code>origin</code> must be this server's IP address and port, with no slash at the end.</li>
+          <li>Start JKSV. It should say WebDAV started. If it doesn't, check the address, that the receiver is on, and that the Switch has internet access (JKSV checks for it). JKSV's log on the SD card has the details.</li>
+          <li>In JKSV's settings, turn on <strong>Export to ZIP</strong>. Current JKSV versions only upload zip backups.</li>
+        </ol>
+      </details>
+      <h3>Each time</h3>
+      <ol class="steps">
+        <li>Save in the game, then close it.</li>
+        <li>In JKSV, open the game and make a new backup.</li>
+        <li>Highlight the backup and press <strong>ZR</strong> to upload it. JKSV's auto-upload setting does this for every new backup.</li>
+        <li>Check the list below. JKSV reports success even when the upload was refused, so this list is the real answer.</li>
+      </ol>
+      <p class="muted">Things to know: the password sits in plain text on the SD card and travels unencrypted over your Wi-Fi. Anyone on your network who has it can add saves, but can't read, change or delete any. Turn the receiver off when you don't need it, or make a new login to cut off the old one. JKSV's own remote list stays empty, so restore from Saves, not from JKSV's remote menu.</p>
+      <h3>Last uploads</h3>
+      <div id="jksv-uploads"></div>
+    </div>
+  </section>
+
+  <section id="tab-inspect" class="tab">
+    <div class="card">
+      <h2>Inspect a save file</h2>
+      <p class="muted">Upload a <code>main</code> or other save file (DS, 3DS or Switch) to see what is in it. The file is only read.</p>
+      <div class="row"><input type="file" id="inspect-file"><button id="btn-inspect" class="primary">Inspect</button></div>
+      <label class="check"><input type="checkbox" id="inspect-keep" checked><span>Also keep a copy in Saves</span></label>
+      <div id="inspect-summary"></div>
+    </div>
+    <div class="card hidden" id="inspect-boxes-card">
+      <div class="row"><button id="ibox-prev" aria-label="Previous box">&lsaquo;</button><select id="ibox-select"></select><button id="ibox-next" aria-label="Next box">&rsaquo;</button></div>
+      <div id="ibox-grid" class="grid"></div>
+    </div>
+  </section>
+
+  <section id="tab-log" class="tab">
+    <div class="card"><div class="row spread"><h2>Log</h2><button id="btn-log-refresh">Refresh</button></div><div id="audit" class="audit"></div></div>
+  </section>
+</main>
+<div id="toast" class="toast hidden"></div>
+<script src="app.js"></script>
+</body>
+</html>

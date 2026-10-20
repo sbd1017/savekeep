@@ -1,0 +1,8 @@
+<Project Sdk="Microsoft.NET.Sdk">
+  <PropertyGroup>
+    <AssemblyName>SaveKeep.Core</AssemblyName>
+  </PropertyGroup>
+  <ItemGroup>
+    <PackageReference Include="PKHeX.Core" Version="26.8.26" />
+  </ItemGroup>
+</Project>

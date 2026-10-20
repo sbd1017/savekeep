@@ -1,0 +1,36 @@
+[Unit]
+Description=SaveKeep - Pokémon save backup vault (local network only)
+After=network-online.target
+Wants=network-online.target
+
+[Service]
+Type=simple
+User=savekeep
+Group=savekeep
+WorkingDirectory=/var/lib/savekeep
+ExecStart=/opt/savekeep/app/savekeep
+Environment=DOTNET_CLI_TELEMETRY_OPTOUT=1
+Environment=DOTNET_gcServer=0
+Environment=SAVEKEEP_SaveKeep__DataDir=/var/lib/savekeep
+Restart=on-failure
+RestartSec=5
+
+# Read-only system; only the data directory is writable.
+NoNewPrivileges=yes
+ProtectSystem=strict
+ProtectHome=yes
+PrivateTmp=yes
+PrivateDevices=yes
+ReadWritePaths=/var/lib/savekeep
+ProtectKernelTunables=yes
+ProtectKernelModules=yes
+ProtectControlGroups=yes
+RestrictSUIDSGID=yes
+LockPersonality=yes
+RestrictAddressFamilies=AF_INET AF_INET6 AF_UNIX
+# Network-level LAN restriction, on top of the application's own checks.
+IPAddressDeny=any
+IPAddressAllow=localhost link-local multicast 10.0.0.0/8 172.16.0.0/12 192.168.0.0/16 fc00::/7
+
+[Install]
+WantedBy=multi-user.target
