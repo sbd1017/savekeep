@@ -12,6 +12,10 @@ Each save is read with [PKHeX.Core](https://github.com/kwsch/PKHeX), so the list
 
 SaveKeep never touches console memory and never writes to the console. To go back to a save you download it and restore it yourself with JKSV or Checkpoint; the page has the steps.
 
+![The save list: three Sword saves and an Ultra Sun save, one pinned with its details open](docs/screenshots/saves.webp)
+
+All the screenshots use made-up saves from the bundled simulator.
+
 ## How the vault behaves
 
 - A save is stored once, keyed by the SHA-256 of `main`. The same save arriving again (another upload, the same backup copied twice) is recorded as "seen again", not stored twice.
@@ -47,6 +51,8 @@ scripts/dev.sh
 
 Then open http://localhost:8797, go to "Copy over FTP", pick Sword or Ultra Sun and search with IP `127.0.0.1` and port `5021`. The fake SD card has a few made-up backups; type `n` in the terminal to add a new one and see the "new since last search" suggestion work.
 
+![Copy over FTP: the backup that appeared since the last search is suggested](docs/screenshots/ftp.webp)
+
 ### On a Raspberry Pi (or any Linux box)
 
 ```bash
@@ -74,6 +80,8 @@ Environment variables work too, prefixed with `SAVEKEEP_` (`SAVEKEEP_SaveKeep__V
 2. Put that file on the Switch's SD card as `sd:/config/JKSV/webdav.json`. `origin` has to be the server's IP address (the Switch can't resolve `.local` names).
 3. Start JKSV, check it says WebDAV started, and turn on "Export to ZIP" in its settings.
 4. Back up a game, highlight the backup, press ZR. The upload list on the page shows whether it was kept or refused. JKSV says "uploaded" either way, so check the page.
+
+![The JKSV receiver turned on, with one upload kept. Opened as localhost here, hence the warning about the address](docs/screenshots/jksv.webp)
 
 Things worth knowing: JKSV only starts WebDAV if the Switch has internet access. The current JKSV only uploads zips. The receiver never lists files back, so JKSV's remote menu stays empty and can't overwrite or delete anything. `docs/jksv-webdav.md` has the exact requests both JKSV versions send.
 
